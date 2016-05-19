@@ -1,0 +1,23 @@
+FROM <%= ENV.fetch 'BASE_IMAGE' %>
+
+ADD platform/<%= ENV.fetch 'PLATFORM' %> /platform
+RUN /platform/install-deps.sh
+
+RUN git config --global user.email "builder@aptible.com" \
+ && git config --global user.name "Builder"
+
+RUN wget -O ruby-install-0.6.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.6.0.tar.gz \
+ && tar -xzvf ruby-install-0.6.0.tar.gz \
+ && cd ruby-install-0.6.0/ \
+ && make install \
+ && cd .. \
+ && rm -rf ruby-install-0.6.0 \
+ && rm ruby-install-0.6.0.tar.gz
+
+ENV RUBY_VERSION 2.2.4
+RUN /platform/install-ruby.sh && rm -rf "/usr/local/src/ruby-${RUBY_VERSION}"
+
+RUN gem install bundler --no-ri --no-rdoc
+
+ENV OMNIBUS_VERSION 5.4.0
+RUN gem install omnibus --version "$OMNIBUS_VERSION" --no-ri --no-rdoc
