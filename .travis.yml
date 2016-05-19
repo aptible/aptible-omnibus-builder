@@ -9,7 +9,10 @@ env:
     - DOCKER_CONFIG=./.docker
   matrix:
     - TAG=ubuntu-1404
+    - TAG=ubuntu-1604
+    - TAG=debian-7
     - TAG=debian-8
+    - TAG=centos-6
     - TAG=centos-7
 
 script:
