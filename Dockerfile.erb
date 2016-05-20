@@ -1,5 +1,7 @@
 FROM <%= ENV.fetch 'BASE_IMAGE' %>
 
+ENV GIT_FROM_RPMFORGE_PKG <%= ENV['GIT_FROM_RPMFORGE_PKG'] || '""' %>
+
 ADD platform/<%= ENV.fetch 'PLATFORM' %> /platform
 RUN /platform/install-deps.sh
 
