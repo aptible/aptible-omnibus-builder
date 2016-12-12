@@ -2,6 +2,7 @@
 set -o errexit
 set -o nounset
 
+yum update yum
 yum install -y epel-release
 yum install -y wget sudo which fakeroot
 yum groupinstall -y "Development tools"
