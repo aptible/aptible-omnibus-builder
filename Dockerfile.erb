@@ -2,6 +2,8 @@ FROM <%= ENV.fetch 'BASE_IMAGE' %>
 
 ENV GIT_FROM_RPMFORGE_PKG <%= ENV['GIT_FROM_RPMFORGE_PKG'] || '""' %>
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 ADD platform/<%= ENV.fetch 'PLATFORM' %> /platform
 RUN /platform/install-deps.sh
 
@@ -16,10 +18,10 @@ RUN wget -O ruby-install-0.6.0.tar.gz https://github.com/postmodern/ruby-install
  && rm -rf ruby-install-0.6.0 \
  && rm ruby-install-0.6.0.tar.gz
 
-ENV RUBY_VERSION 2.2.4
+ENV RUBY_VERSION 2.6.9
 RUN /platform/install-ruby.sh && rm -rf "/usr/local/src/ruby-${RUBY_VERSION}"
 
-RUN gem install bundler --no-ri --no-rdoc
+RUN gem install bundler
 
 ENV OMNIBUS_VERSION 5.5.0
-RUN gem install omnibus --version "$OMNIBUS_VERSION" --no-ri --no-rdoc
+RUN gem install omnibus --version "$OMNIBUS_VERSION"
