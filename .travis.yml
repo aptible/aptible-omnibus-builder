@@ -7,7 +7,7 @@ services:
 env:
   matrix:
     - TAG=ubuntu-1604
-    - TAG=debian-11
+    - TAG=debian-9
     - TAG=centos-7
 
 script:
